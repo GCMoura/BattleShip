@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -6,24 +7,32 @@
 body{
   width: 100%;
   height: 100vh;
+  font-family: 'Press Start 2P', cursive;
 }
 .header{
   width: 100%;
-  height: 10%;
+  height: 15%;
   background-color: #2274a5;
+
+  color: #fff;
+  font-size: 2rem;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+.header .input-radio{
+  font-size: 0.8rem;
+  margin-top: 20px;
+}
 .container{
   width: 100%;
-  height: 70%;
+  height: 65%;
   background-color: #083d77;
 
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 200px 1fr;
 }
 .container .user-player{
   display: flex;
@@ -31,6 +40,58 @@ body{
   align-items: center;
   justify-content: center;
 }
+.container .user-player input,
+.container .pc-player input{
+  margin-top: 10px;
+  margin-bottom: 15px;
+  text-align: right;
+  background: #fff;
+  border-radius: 0.3rem;
+  width: 80px;
+  height: 30px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.2rem;
+  color: #000;
+}
+.container .ship-type h3{
+  color: #fff;
+  margin-bottom: 50px;
+}
+.container .ship-type{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.container .ship-type .name{
+  font-size: 0.8rem;
+  color: #fff;
+}
+.container .ship-type div>div{
+  width: 40px;
+  height: 40px;
+  border: 0.1px solid #000;
+}
+
+.container .ship-type .cor,
+.container .ship-type .fra{
+  display: flex;
+}
+.container .ship-type .sub{
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background: red;
+}
+.container .ship-type .cor{
+  margin: 10px 0px;
+  background: green;
+}
+
+.container .ship-type .fra{
+  margin: 10px 0px;
+  background: yellow;
+}
+
 .container .pc-player{
   display: flex;
   flex-direction: column;
@@ -45,7 +106,15 @@ body{
 .pc-player div>span>div {
   width: 40px;
   height: 40px;
-  border: 2px solid black;
+  border: 0.1px solid #222;
+
+  font-size: 0.8rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: gray;
 }
 
 .controller{
@@ -58,10 +127,43 @@ body{
   align-items: center;
   justify-content: center;
 }
+.controller .play{
+  width: 300px;
+  display: flex;
+  justify-content: space-around;
+}
+.controller .play input{
+  border-radius: 0.3rem;
+  width: 80px;
+  height: 40px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.5rem;
+}
+.controller .play button{
+  background: #0f6614;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  border: transparent;
+  width: 100px;
+  height: 40px;
+  font-family: 'Press Start 2P', cursive;
+  transition: 0.2s ease;
+}
+.controller .play button:hover{
+  background: #962a0a;
+}
+.controller .play button:active{
+  background: #000;
+  color: #fff;
+}
 .footer{
   width: 100%;
   height: 3%;
   background-color: #2274a5;
+
+  font-size: 0.5rem;
 
   display: flex;
   flex-direction: column;
