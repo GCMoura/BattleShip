@@ -8,19 +8,23 @@
 </head>
 <body>
   <header class="header">
-    Batalha Naval
+    <span>Batalha Naval</span>
     <div class="input-radio">
-      <input type="radio" name="1player" id="" value="1 player"> 1 Player
-      <input type="radio" name="2player" id="" value="2 player2"> 2 Players
+      <label >
+        <input type="radio" name="players" id="player-1 " value="1-player" checked> 1 Player
+      </label>
+      <label>
+        <input type="radio" name="players" id="player-2" value="2-player"> 2 Players
+      </label>
+      <button class="start">Start</button>
     </div>
   </header>
   <div class="container">
     <div class="user-player">
-      <p>
-        Player 1
+      <p>  
       </p>
       <span>
-        Pontos:<input type="text" disabled>
+        Pontos:<input type="number" readonly>
       </span>
       <div>
         <span>
@@ -127,11 +131,10 @@
       </div>
     </div>
     <div class="pc-player">
-      <p>
-        Player 2
+      <p>  
       </p>
       <span>
-        Pontos:<input type="text" disabled>
+        Pontos:<input type="number" readonly>
       </span>
       <div>
         <span>
@@ -218,9 +221,21 @@
     </div>
   </div>
   <div class="controller">
+    <div class="two-players">
+      <input type="text" id="input-player-one">
+      <button id="player-one">
+        Fire
+      </button>
+    </div>
     <div class="play">
       <input type="text">
       <button>
+        Fire
+      </button>
+    </div>
+    <div class="two-players">
+      <input type="text" id="input-player-two">
+      <button id="player-two">
         Fire
       </button>
     </div>
@@ -228,7 +243,10 @@
   <footer class="footer">
     Made by Gabriel Moura
   </footer>
-
+  <audio src="./audio/fire.mp3" id="fire"></audio>
+  <audio src="./audio/error.mp3" id="error"></audio>
+  <audio src="./audio/hit.mp3" id="hit"></audio>
+  <audio src="./audio/win.mp3" id="win"></audio>
 
   <script src="app.js"></script>
 </body>

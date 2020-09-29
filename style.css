@@ -9,6 +9,21 @@ body{
   height: 100vh;
   font-family: 'Press Start 2P', cursive;
 }
+.show-alert{
+  width: 50%;
+  height: 25%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+  
+  position: absolute;
+  top: 0;
+  left: 15%; 
+}
 .header{
   width: 100%;
   height: 15%;
@@ -18,17 +33,37 @@ body{
   font-size: 2rem;
 
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+}
+.header span{
+  cursor: pointer;
 }
 .header .input-radio{
   font-size: 0.8rem;
-  margin-top: 20px;
+  /* margin-top: 10px; */
+}
+.header .input-radio label{
+  cursor: pointer;
+}
+.header .input-radio button{
+  background: #ebee29;
+  color: #111;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  border: 2px solid #000;
+  width: 140px;
+  height: 40px;
+  font-family: 'Press Start 2P', cursive;
+  transition: 0.4s ease;
+}
+.header .input-radio button:hover{
+  background: #39bb3f;
 }
 .container{
   width: 100%;
-  height: 65%;
+  height: 67%;
   background-color: #083d77;
 
   display: grid;
@@ -119,27 +154,31 @@ body{
 
 .controller{
   width: 100%;
-  height: 17%;
+  height: 15%;
   background-color: #2274a5;
 
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-}
-.controller .play{
-  width: 300px;
-  display: flex;
   justify-content: space-around;
 }
-.controller .play input{
+
+.controller .play,
+.controller .two-players {
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.controller .play input,
+.controller .two-players input{
   border-radius: 0.3rem;
   width: 80px;
   height: 40px;
   font-family: 'Press Start 2P', cursive;
   font-size: 1.5rem;
 }
-.controller .play button{
+.controller .play button,
+.controller .two-players button{
   background: #0f6614;
   color: #fff;
   font-size: 1.2rem;
@@ -151,13 +190,25 @@ body{
   font-family: 'Press Start 2P', cursive;
   transition: 0.2s ease;
 }
-.controller .play button:hover{
+.controller .play button:hover,
+.controller .two-players button:hover{
   background: #962a0a;
 }
-.controller .play button:active{
+.controller .play button:active,
+.controller .two-players button:active{
   background: #000;
   color: #fff;
 }
+.controller div:nth-child(2){
+  margin-left: 80px;
+}
+.controller div:nth-child(1){
+  margin-left: 120px;
+}
+.controller div:nth-child(3){
+  margin-left: 350px;
+}
+
 .footer{
   width: 100%;
   height: 3%;

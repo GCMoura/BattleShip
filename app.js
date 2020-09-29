@@ -1,18 +1,38 @@
-var squaresPC = document.querySelectorAll('.pc-player>div>span>div')
-var squaresUser = document.querySelectorAll('.user-player>div>span>div')
-
 var shipSize = [2, 2, 3, 4]
 var shipColor = ['red', 'red', 'green', 'yellow']
 
 var SHIPSONBOARD = 4
 
+var fire = document.querySelector('#fire')
+var error = document.querySelector('#error')
+var hit = document.querySelector('#hit')
+var win = document.querySelector('#win')
+
+var battleship = document.querySelector('.header>span')
+
+var squaresPC = document.querySelectorAll('.pc-player>div>span>div')
+var squaresUser = document.querySelectorAll('.user-player>div>span>div')
+
 var input = document.querySelector('.play>input')
 var button = document.querySelector('.play>button')
 
-var userPoints = document.querySelector('.user-player>span>input')
-userPoints.value = 0
+var inputOnePlayer = document.querySelector('#input-player-one')
+var inputTwoPlayer = document.querySelector('#input-player-two')
+
+var divTwoPlayers = document.querySelectorAll('.two-players')
+var divOnePlayer = document.querySelector('.play')
+var playerOneButton = document.querySelector('#player-one')
+var playerTwoButton = document.querySelector('#player-two')
+
+var startButton = document.querySelector('.start')
+
+var userPoints = document.querySelector('.user-player>span>input') 
+var player1Name = document.querySelector('.user-player>p')
 var PCPoints = document.querySelector('.pc-player>span>input')
-PCPoints.value = 0
+var player2Name = document.querySelector('.pc-player>p')
+
+var players = document.getElementsByName('players');
+var twoPlayers = false
 
 var play
 var playPC
@@ -23,9 +43,49 @@ var choosenSquare
 var createShipsSquaresPC
 var createShipsSquaresUser
 
-createSquaresArray()
-sortSquareIndexForPC()
-sortSquareIndexForUser()
+battleship.addEventListener('click', reload)
+
+//reinicia a página
+function reload(){
+  location.reload();
+  return false;
+}
+
+divTwoPlayers[0].style.display = 'none'
+divTwoPlayers[1].style.display = 'none'
+
+startButton.addEventListener('click', startGame)
+
+//Inicia um novo jogo com a escolha de um ou dois jogadores
+function startGame(){
+  userPoints.valueAsNumber = 0
+  PCPoints.value = 0
+  for(let i = 0; i < players.length; i++){
+    if(players[i].checked){
+      if(players[i].value === '1-player'){
+        player1Name.innerHTML = "Player 1"
+        player2Name.innerHTML = 'User PC'
+
+        divOnePlayer.style.display = 'block'
+        divTwoPlayers[0].style.display = 'none'
+        divTwoPlayers[1].style.display = 'none'
+
+      } else {
+        player1Name.innerHTML = "Player 1"
+        player2Name.innerHTML = 'Player 2'
+        twoPlayers = true
+
+        divOnePlayer.style.display = 'none'
+        divTwoPlayers[0].style.display = 'block'
+        divTwoPlayers[1].style.display = 'block'
+      }
+    }
+  }
+
+  createSquaresArray()
+  sortSquareIndexForPC()
+  sortSquareIndexForUser()
+}
 
 //cria um array com as posições do tabuleiro
 function createSquaresArray(){ 
@@ -54,7 +114,7 @@ function sortFirstIndexPC(choosenSquare){
   return choosenSquare
 }
 
-//sorteia um quadrado de inicio para cada navios e adiciona ao array para jogador PC
+//sorteia um quadrado de inicio para cada navio e adiciona ao array para jogador PC
 function sortSquareIndexForPC(){
   createSquaresArray()
 
@@ -71,8 +131,7 @@ function sortSquareIndexForPC(){
   if(validateShipsSquares === true) {
     sortSquareIndexForPC()
   } else {
-    //drawShipsPC(createShipsSquaresPC)
-    console.log('navios PC - ', createShipsSquaresPC)
+    if(createShipsSquaresPC.length !== 11) reload()
   } 
 }
 
@@ -103,9 +162,8 @@ function sortSquareIndexForUser(){
 
   if(validateShipsSquares === true) {
     sortSquareIndexForUser()
-  } else {
-    //drawShipsUser(createShipsSquaresUser)
-    console.log('navios User - ', createShipsSquaresUser)
+  } else if(createShipsSquaresUser.length !== 11) {
+      reload()    
   } 
 }
 
@@ -153,7 +211,7 @@ function avoidSameSquare(validateChoosenSquare){
 }
 
 //é necessário verificar se existem números repetidos no array de quadrados selecionados
-//se houver repetições, precisa reiniciar o procedimento novamente, retorna treue para verificação
+//se houver repetições, precisa reiniciar o procedimento novamente, retorna true para verificação
 function validateArraySquares(createShipsSquares){
   for(let i = 0; i < createShipsSquares.length; i++){
     for(let j = i + 1; j < createShipsSquares.length; j++){
@@ -208,10 +266,17 @@ function drawShipsUser(shipsSquares){
 
 //manipula as jogadas do User
 function userPlay(){
-  play = input.value.toUpperCase() //coloca a jogada digitada no formato desejado
-
-  input.value = ''
-  input.focus()
+  fire.play()
+  if(twoPlayers === true){
+    play = inputOnePlayer.value.toUpperCase()
+    inputOnePlayer.value = ''
+    inputTwoPlayer.focus()
+    
+  } else {
+    play = input.value.toUpperCase() //coloca a jogada digitada no formato desejado
+    input.value = ''
+    input.focus()
+  }
 
   //retorna o número correspondente ao indice do tabuleiro
   for(let i = 0; i < squaresPC.length; i++){
@@ -219,36 +284,62 @@ function userPlay(){
       play = i
     }
   }
- 
-  let fireBall = fireBallUser(play)
 
-  if(fireBall === 'error'){
-    let color = '#083d77'
-    squaresPC[play].style.background = `${color}` 
-    squaresPC[play].innerHTML = ''
-  } else {
-    hitShipUser(fireBall)
-  }
-
+  let fireBall
   setTimeout(() => {
-    console.log('pc jogando')
-    PCPlay()
-  }, 1000);
+    fireBall = fireBallUser(play)
+    if(fireBall === 'error'){
+      error.play()
+      let color = '#083d77'
+      squaresPC[play].style.background = `${color}` 
+      squaresPC[play].innerHTML = ''
+    } else {
+      hit.play()
+      hitShipUser(fireBall)
+    }
+  }, 2000);
+
+  if(twoPlayers === false){
+    setTimeout(() => {
+      PCPlay(twoPlayers)
+    }, 4000);
+  } 
+
 }
 
 //faz a jogada do jogador PC
-function PCPlay(){
-  playPC = Math.floor(Math.random() * squaresUserArray.length)
-  
-  let fireBall = fireBallPC(playPC)
-
-  if(fireBall === 'error'){
-    let color = '#083d77'
-    squaresUser[playPC].style.background = `${color}` 
-    squaresUser[playPC].innerHTML = ''
+function PCPlay(twoPlayers){
+  fire.play()
+  if(twoPlayers === true){
+    play = inputTwoPlayer.value.toUpperCase() //coloca a jogada digitada no formato desejado
+    inputTwoPlayer.value = ''
+    inputOnePlayer.focus()
+    
+    playPC = play
   } else {
-    hitShipPC(fireBall)
+    playPC = Math.floor(Math.random() * squaresUserArray.length)
   }
+
+  //retorna o número correspondente ao indice do tabuleiro
+  for(let i = 0; i < squaresUser.length; i++){
+    if(playPC === squaresUser[i].id){
+      playPC = i
+    }
+  }
+  let fireBall
+  setTimeout(() => {
+    fireBall = fireBallPC(playPC)
+    if(fireBall === 'error'){
+      error.play()
+      let color = '#083d77'
+      squaresUser[playPC].style.background = `${color}` 
+      squaresUser[playPC].innerHTML = ''
+    } else {
+      hit.play()
+      hitShipPC(fireBall)
+    }
+  }, 2000);
+
 }
 
 //verifica a igualdade da jogada com os numeros escolhidos na jogada do User
@@ -267,21 +358,33 @@ function hitShipUser(i){
     let color = shipColor[0]
     squaresPC[play].style.background = `${color}`
     squaresPC[play].innerHTML = ''
+    userPoints.valueAsNumber += 10
   }
   if(i === 4 || i === 5 || i === 6 ){
     let color = shipColor[2]
     squaresPC[play].style.background = `${color}`
     squaresPC[play].innerHTML = ''
+    userPoints.valueAsNumber += 10
   }
   if(i === 7 || i === 8 || i === 9 || i === 10){
     let color = shipColor[3]
     squaresPC[play].style.background = `${color}`
     squaresPC[play].innerHTML = ''
+    userPoints.valueAsNumber += 20
+  }
+  if(userPoints.valueAsNumber === 150){
+    setTimeout(() => {
+      alert('Player 1 WIN')
+    }, 1000);
   }
 }
 
 //verifica a igualdade da jogada com os numeros escolhidos na jogada do PC
+//evita a repetição de squares
 function fireBallPC(playPC){
+  squaresUserArray = squaresUserArray.filter(square => {
+    return square !== playPC
+  })
   for(let i = 0; i < createShipsSquaresUser.length; i++){
     if(playPC === createShipsSquaresUser[i]){
       return i
@@ -295,18 +398,48 @@ function hitShipPC(i){
     let color = shipColor[0]
     squaresUser[playPC].style.background = `${color}`
     squaresUser[playPC].innerHTML = ''
+    PCPoints.valueAsNumber += 10
   }
   if(i === 4 || i === 5 || i === 6 ){
     let color = shipColor[2]
     squaresUser[playPC].style.background = `${color}`
     squaresUser[playPC].innerHTML = ''
+    PCPoints.valueAsNumber += 10
   }
   if(i === 7 || i === 8 || i === 9 || i === 10){
     let color = shipColor[3]
     squaresUser[playPC].style.background = `${color}`
     squaresUser[playPC].innerHTML = ''
+    PCPoints.valueAsNumber += 20
   }
+  if(PCPoints.valueAsNumber === 150){
+    setTimeout(() => {
+      alert('Player 2 WIN')
+    }, 1000);
+  }
+}
+//mostrar alertas no jogo
+function alert(message){
+  let div = document.createElement('div')
+  div.classList.add('show-alert')
+  div.style.background = "rgb(11, 98, 28)"
+  div.innerHTML = message
+  document.body.appendChild(div)
+
+  win.play()
+  fire.volume = 0
+  hit.volume = 0
+  error.volume = 0
+
+  drawShipsPC(createShipsSquaresPC)
+  drawShipsUser(createShipsSquaresUser)
+
+  setTimeout(() => {
+    div.classList.remove('show-alert')
+    reload()
+  }, 5000);
 }
 
 button.addEventListener('click', userPlay)
-
+playerOneButton.addEventListener('click', userPlay)
+playerTwoButton.addEventListener('click', function() {PCPlay(twoPlayers)})
