@@ -11,18 +11,62 @@ body{
 }
 .show-alert{
   width: 50%;
-  height: 25%;
+  height: 15%;
+  font-size: 1.6rem;
+  border-radius: 25px;
+  border: 2px solid black;
+  background: gray;
+  color: #000;  
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  position: absolute;
+  top: 0;
+  left: 25%; 
+}
+.show-confirm{
+  width: 30%;
+  height: 15%;
+  border-radius: 25px;
+  border: 2px solid black;
+  background: gray;
+  color: #000;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  color: #fff;
-  
   position: absolute;
   top: 0;
-  left: 15%; 
+  left: 35%; 
+}
+.show-confirm .input-confirm,
+.show-confirm .input2-confirm{
+  font-size: 1.1rem;
+  font-family: 'Press Start 2P', cursive;
+  margin: 5px 0px;
+  height: 30px;
+  width: 200px;
+  border-radius: 10px;
+}
+.show-confirm .button-confirm{
+  background: #ebee29;
+  color: #111;
+  font-size: 0.7rem;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  border: 2px solid #000;
+  width: 80px;
+  height: 30px;
+  font-family: 'Press Start 2P', cursive;
+  transition: 0.4s ease;
+}
+.show-confirm .button-confirm:hover{
+  background: #39bb3f;
 }
 .header{
   width: 100%;

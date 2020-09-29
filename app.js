@@ -13,7 +13,7 @@ var battleship = document.querySelector('.header>span')
 var squaresPC = document.querySelectorAll('.pc-player>div>span>div')
 var squaresUser = document.querySelectorAll('.user-player>div>span>div')
 
-var input = document.querySelector('.play>input')
+var inputSinglePlayer = document.querySelector('.play>input')
 var button = document.querySelector('.play>button')
 
 var inputOnePlayer = document.querySelector('#input-player-one')
@@ -33,6 +33,8 @@ var player2Name = document.querySelector('.pc-player>p')
 
 var players = document.getElementsByName('players');
 var twoPlayers = false
+var player1
+var player2
 
 var play
 var playPC
@@ -60,10 +62,11 @@ startButton.addEventListener('click', startGame)
 function startGame(){
   userPoints.valueAsNumber = 0
   PCPoints.value = 0
+  
   for(let i = 0; i < players.length; i++){
     if(players[i].checked){
       if(players[i].value === '1-player'){
-        player1Name.innerHTML = "Player 1"
+        getPlayerName()
         player2Name.innerHTML = 'User PC'
 
         divOnePlayer.style.display = 'block'
@@ -71,9 +74,8 @@ function startGame(){
         divTwoPlayers[1].style.display = 'none'
 
       } else {
-        player1Name.innerHTML = "Player 1"
-        player2Name.innerHTML = 'Player 2'
         twoPlayers = true
+        getPlayerName()
 
         divOnePlayer.style.display = 'none'
         divTwoPlayers[0].style.display = 'block'
@@ -273,9 +275,9 @@ function userPlay(){
     inputTwoPlayer.focus()
     
   } else {
-    play = input.value.toUpperCase() //coloca a jogada digitada no formato desejado
-    input.value = ''
-    input.focus()
+    play = inputSinglePlayer.value.toUpperCase() //coloca a jogada digitada no formato desejado
+    inputSinglePlayer.value = ''
+    inputSinglePlayer.focus()
   }
 
   //retorna o número correspondente ao indice do tabuleiro
@@ -374,7 +376,7 @@ function hitShipUser(i){
   }
   if(userPoints.valueAsNumber === 150){
     setTimeout(() => {
-      alert('Player 1 WIN')
+      alert(`${player1} ganhou!!`)
     }, 1000);
   }
 }
@@ -414,15 +416,14 @@ function hitShipPC(i){
   }
   if(PCPoints.valueAsNumber === 150){
     setTimeout(() => {
-      alert('Player 2 WIN')
+      alert(`${player2} ganhou!!`)
     }, 1000);
   }
 }
-//mostrar alertas no jogo
+//mostrar alerta de fim de jogo
 function alert(message){
   let div = document.createElement('div')
   div.classList.add('show-alert')
-  div.style.background = "rgb(11, 98, 28)"
   div.innerHTML = message
   document.body.appendChild(div)
 
@@ -438,6 +439,62 @@ function alert(message){
     div.classList.remove('show-alert')
     reload()
   }, 5000);
+}
+
+//mostrar janela solicitando nome do usuário
+function getPlayerName(){
+  let div = document.createElement('div')
+  div.classList.add('show-confirm')
+  div.innerHTML = 'Nome: '
+
+  let input = document.createElement('input')
+  input.classList.add('input-confirm')
+
+  let button = document.createElement('button')
+  button.classList.add('button-confirm')
+  button.innerHTML = 'Jogar'
+
+  div.appendChild(input)
+  div.appendChild(button)
+  document.body.appendChild(div)
+  input.focus()
+  if(twoPlayers === false){ 
+    
+    button.addEventListener('click', () => { 
+      player1 = document.querySelector('.input-confirm').value
+      player1Name.innerHTML = player1
+      div.style.display = 'none'
+      inputSinglePlayer.focus()
+    })
+  } else {
+    button.addEventListener('click', () => { 
+      player1 = document.querySelector('.input-confirm').value
+      player1Name.innerHTML = player1
+      div.style.display = 'none'
+
+      let div2 = document.createElement('div')
+      div2.classList.add('show-confirm')
+      div2.innerHTML = 'Nome: '
+
+      let input2 = document.createElement('input')
+      input2.classList.add('input2-confirm')
+
+      let button = document.createElement('button')
+      button.classList.add('button-confirm')
+      button.innerHTML = 'Jogar'
+
+      div2.appendChild(input2)
+      div2.appendChild(button)
+      document.body.appendChild(div2)
+      input2.focus()
+      button.addEventListener('click', () => { 
+        player2 = document.querySelector('.input2-confirm').value
+        player2Name.innerHTML = player2
+        div2.style.display = 'none'
+        inputOnePlayer.focus()
+      })
+    })
+  }
 }
 
 button.addEventListener('click', userPlay)
