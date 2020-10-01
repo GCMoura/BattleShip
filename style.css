@@ -52,6 +52,8 @@ body{
   height: 30px;
   width: 200px;
   border-radius: 10px;
+  text-align: center;
+  outline: none;
 }
 .show-confirm .button-confirm{
   background: #ebee29;
@@ -85,7 +87,6 @@ body{
 }
 .header .input-radio{
   font-size: 0.8rem;
-  /* margin-top: 10px; */
 }
 .header .input-radio label{
   cursor: pointer;
@@ -131,6 +132,7 @@ body{
   font-family: 'Press Start 2P', cursive;
   font-size: 1.2rem;
   color: #000;
+  outline: none;
 }
 .container .ship-type h3{
   color: #fff;
@@ -205,13 +207,19 @@ body{
   align-items: center;
   justify-content: space-around;
 }
+.controller .play{
+  display: none;
+}
+.controller .play input{
+  margin-right: 50px;
+  margin-left: -100px;
+}
 
-.controller .play,
 .controller .two-players {
   width: 300px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 }
 .controller .play input,
 .controller .two-players input{
@@ -220,6 +228,8 @@ body{
   height: 40px;
   font-family: 'Press Start 2P', cursive;
   font-size: 1.5rem;
+  text-align: center;
+  outline: none;
 }
 .controller .play button,
 .controller .two-players button{
@@ -261,7 +271,15 @@ body{
   font-size: 0.5rem;
 
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center; 
+}
+.footer a{
+  margin-left: 8px;
+  text-decoration: none;
+  color: yellow;
+}
+
+.footer a:hover{
+  color: #000;
 }
